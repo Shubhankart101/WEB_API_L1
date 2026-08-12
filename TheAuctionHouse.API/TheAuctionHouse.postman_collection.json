@@ -1,0 +1,327 @@
+{
+  "info": {
+    "name": "TheAuctionHouse API",
+    "_postman_id": "b3eb2b7e-786f-47c8-a839-793670dd7fd4",
+    "description": "Postman collection for TheAuctionHouse API including auth, user, asset, auction, wallet, and admin endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "userToken",
+      "value": ""
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "assetId",
+      "value": "1"
+    },
+    {
+      "key": "auctionId",
+      "value": "1"
+    },
+    {
+      "key": "targetUserId",
+      "value": "2"
+    }
+  ],
+  "item": [
+    {
+      "name": "PortalUser",
+      "item": [
+        {
+          "name": "SignUp User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Normal User\",\n  \"emailId\": \"normal.user@domain.com\",\n  \"password\": \"Password@123\",\n  \"isAdmin\": false\n}"
+            },
+            "url": "{{baseUrl}}/api/PortalUser/signup"
+          }
+        },
+        {
+          "name": "SignUp Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin User\",\n  \"emailId\": \"admin.user@domain.com\",\n  \"password\": \"Password@123\",\n  \"isAdmin\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/PortalUser/signup"
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emailId\": \"normal.user@domain.com\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/PortalUser/login"
+          }
+        },
+        {
+          "name": "Login Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emailId\": \"admin.user@domain.com\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/PortalUser/login"
+          }
+        },
+        {
+          "name": "Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/PortalUser/profile"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assets",
+      "item": [
+        {
+          "name": "Create Asset",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Vintage Camera Asset\",\n  \"description\": \"Vintage camera in excellent condition for collectors.\",\n  \"retailPrice\": 1200\n}"
+            },
+            "url": "{{baseUrl}}/api/Asset"
+          }
+        },
+        {
+          "name": "Get My Assets",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/Asset/mine"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wallet",
+      "item": [
+        {
+          "name": "Deposit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 2000\n}"
+            },
+            "url": "{{baseUrl}}/api/Wallet/deposit"
+          }
+        },
+        {
+          "name": "Balance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/Wallet/balance"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auction",
+      "item": [
+        {
+          "name": "Post Auction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assetId\": {{assetId}},\n  \"reservedPrice\": 500,\n  \"minimumBidIncrement\": 25,\n  \"totalMinutesToExpiry\": 120\n}"
+            },
+            "url": "{{baseUrl}}/api/Auction"
+          }
+        },
+        {
+          "name": "Place Bid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"auctionId\": {{auctionId}},\n  \"bidAmount\": 550\n}"
+            },
+            "url": "{{baseUrl}}/api/Auction/bid"
+          }
+        },
+        {
+          "name": "Open Auctions",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/Auction/open"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Set User Access",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetUserId\": {{targetUserId}},\n  \"isBlocked\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/Admin/access"
+          }
+        },
+        {
+          "name": "Regenerate Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetUserId\": {{targetUserId}},\n  \"newPassword\": \"NewPassword@123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/Admin/regenerate-password"
+          }
+        },
+        {
+          "name": "Get User Activity",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/Admin/activity?targetUserId={{targetUserId}}"
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/Admin/users/{{targetUserId}}"
+          }
+        }
+      ]
+    }
+  ]
+}
